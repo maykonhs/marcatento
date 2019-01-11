@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -16,19 +8,20 @@ import {
   Image,
 } from 'react-native';
 
-/* import ImagePicker from 'react-native-image-picker';
+import {
+  AVATAR,
+} from './src/images';
 
-const options = {
-  title: 'Select Avatar',
-  customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-  storageOptions: {
-    skipBackup: true,
-    path: 'images',
-  },
-}; */
+import PhotoModal from './src/components/PhotoModal'
 
 export default class App extends Component {
   state = {
+    firstImage: AVATAR,
+    secondImage: AVATAR,
+    thirdImage: AVATAR,
+    forthImage: AVATAR,
+    modalVisible: false,
+    position: 0,
     homeScore: 0,
     opponentScore: 0,
     homeTotalScore: 0,
@@ -40,6 +33,25 @@ export default class App extends Component {
 
   }
 
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
+
+  setImage(image, position = this.state.position) {
+    if (position === 1) {
+      this.setState({ firstImage: image });
+    }
+    if (position === 2) {
+      this.setState({ secondImage: image });
+    }
+    if (position === 3) {
+      this.setState({ thirdImage: image });
+    }
+    if (position === 4) {
+      this.setState({ forthImage: image });
+    }
+  }
+
   resetBoard = () => {
     this.setState({
       homeScore: 0,
@@ -49,6 +61,10 @@ export default class App extends Component {
 
   resetTotalBoard = () => {
     this.setState({
+      firstImage: AVATAR,
+      secondImage: AVATAR,
+      thirdImage: AVATAR,
+      forthImage: AVATAR,
       homeTotalScore: 0,
       opponentTotalScore: 0,
       homeScore: 0,
@@ -189,17 +205,20 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.externalContainer}>
+        <PhotoModal onCancel={() => this.setState({ modalVisible: false })}
+          setImage={(image) => this.setImage(image)}
+          visible={this.state.modalVisible} />
         <View style={styles.container}>
           <View style={styles.teamContainer}>
             <View style={styles.photoContainer}>
-              <Image
-                style={styles.teamImage}
-                source={require('./assets/images/avatar.png')}
-              />
-              <Image
-                style={styles.teamImage}
-                source={require('./assets/images/avatar.png')}
-              />
+              <TouchableOpacity
+                onPress={() => { this.setState({ modalVisible: true, position: 1 }) }}>
+                <Image style={styles.teamImage} source={this.state.firstImage} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => { this.setState({ modalVisible: true, position: 2 }) }}>
+                <Image style={styles.teamImage} source={this.state.secondImage} />
+              </TouchableOpacity>
             </View>
             <Text style={{
               fontSize: 25,
@@ -234,14 +253,14 @@ export default class App extends Component {
           <Text style={styles.versus}>Vs</Text>
           <View style={styles.teamContainer}>
             <View style={styles.photoContainer}>
-              <Image
-                style={styles.teamImage}
-                source={require('./assets/images/avatar.png')}
-              />
-              <Image
-                style={styles.teamImage}
-                source={require('./assets/images/avatar.png')}
-              />
+              <TouchableOpacity
+                onPress={() => { this.setState({ modalVisible: true, position: 3 }) }}>
+                <Image style={styles.teamImage} source={this.state.thirdImage} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => { this.setState({ modalVisible: true, position: 4 }) }}>
+                <Image style={styles.teamImage} source={this.state.forthImage} />
+              </TouchableOpacity>
             </View>
             <Text style={{
               fontSize: 25,
@@ -341,5 +360,5 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30
-  },
+  }
 });
