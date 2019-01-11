@@ -30,7 +30,6 @@ export default class App extends Component {
     opponentScoreColor: 'yellow',
     homeTotalScoreColor: 'yellow',
     opponentTotalScoreColor: 'yellow',
-
   }
 
   setModalVisible(visible) {
