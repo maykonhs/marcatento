@@ -26,10 +26,6 @@ export default class App extends Component {
     opponentScore: 0,
     homeTotalScore: 0,
     opponentTotalScore: 0,
-    homeScoreColor: 'yellow',
-    opponentScoreColor: 'yellow',
-    homeTotalScoreColor: 'yellow',
-    opponentTotalScoreColor: 'yellow',
   }
 
   setModalVisible(visible) {
@@ -68,10 +64,6 @@ export default class App extends Component {
       opponentTotalScore: 0,
       homeScore: 0,
       opponentScore: 0,
-      homeScoreColor: 'yellow',
-      opponentScoreColor: 'yellow',
-      homeTotalScoreColor: 'yellow',
-      opponentTotalScoreColor: 'yellow',
     })
   }
 
@@ -82,58 +74,14 @@ export default class App extends Component {
       })
     } else {
       if (this.state.homeScore + value > 11) {
-        if ((this.state.homeTotalScore + 1) < this.state.opponentTotalScore) {
-          this.setState({
-            homeTotalScore: this.state.homeTotalScore + 1,
-            homeScoreColor: 'yellow',
-            opponentScoreColor: 'yellow',
-            homeTotalScoreColor: 'red',
-            opponentTotalScoreColor: 'green',
-          })
-          this.resetBoard()
-        }
-        if ((this.state.homeTotalScore + 1) > this.state.opponentTotalScore) {
-          this.setState({
-            homeTotalScore: this.state.homeTotalScore + 1,
-            homeScoreColor: 'yellow',
-            opponentScoreColor: 'yellow',
-            homeTotalScoreColor: 'green',
-            opponentTotalScoreColor: 'red',
-          })
-          this.resetBoard()
-        }
-        if ((this.state.homeTotalScore + 1) === this.state.opponentTotalScore) {
-          this.setState({
-            homeTotalScore: this.state.homeTotalScore + 1,
-            homeScoreColor: 'yellow',
-            opponentScoreColor: 'yellow',
-            homeTotalScoreColor: 'yellow',
-            opponentTotalScoreColor: 'yellow',
-          })
-          this.resetBoard()
-        }
+        this.setState({
+          homeTotalScore: this.state.homeTotalScore + 1,
+        })
+        this.resetBoard()
       } else {
-        if ((this.state.homeScore + value) < this.state.opponentScore) {
-          this.setState({
-            homeScoreColor: 'red',
-            opponentScoreColor: 'green',
-            homeScore: this.state.homeScore + value
-          })
-        }
-        if ((this.state.homeScore + value) > this.state.opponentScore) {
-          this.setState({
-            homeScoreColor: 'green',
-            opponentScoreColor: 'red',
-            homeScore: this.state.homeScore + value
-          })
-        }
-        if ((this.state.homeScore + value) === this.state.opponentScore) {
-          this.setState({
-            homeScoreColor: 'yellow',
-            opponentScoreColor: 'yellow',
-            homeScore: this.state.homeScore + value
-          })
-        }
+        this.setState({
+          homeScore: this.state.homeScore + value
+        })
       }
     }
   }
@@ -145,58 +93,14 @@ export default class App extends Component {
       })
     } else {
       if (this.state.opponentScore + value > 11) {
-        if ((this.state.opponentTotalScore + 1) < this.state.homeTotalScore) {
-          this.setState({
-            opponentTotalScore: this.state.opponentTotalScore + 1,
-            homeScoreColor: 'yellow',
-            opponentScoreColor: 'yellow',
-            opponentTotalScoreColor: 'red',
-            homeTotalScoreColor: 'green',
-          })
-          this.resetBoard()
-        }
-        if ((this.state.opponentTotalScore + 1) > this.state.homeTotalScore) {
-          this.setState({
-            opponentTotalScore: this.state.opponentTotalScore + 1,
-            homeScoreColor: 'yellow',
-            opponentScoreColor: 'yellow',
-            opponentTotalScoreColor: 'green',
-            homeTotalScoreColor: 'red',
-          })
-          this.resetBoard()
-        }
-        if ((this.state.opponentTotalScore + 1) === this.state.homeTotalScore) {
-          this.setState({
-            opponentTotalScore: this.state.opponentTotalScore + 1,
-            homeScoreColor: 'yellow',
-            opponentScoreColor: 'yellow',
-            opponentTotalScoreColor: 'yellow',
-            homeTotalScoreColor: 'yellow',
-          })
-          this.resetBoard()
-        }
+        this.setState({
+          opponentTotalScore: this.state.opponentTotalScore + 1,
+        })
+        this.resetBoard()
       } else {
-        if ((this.state.opponentScore + value) < this.state.homeScore) {
-          this.setState({
-            opponentScoreColor: 'red',
-            homeScoreColor: 'green',
-            opponentScore: this.state.opponentScore + value
-          })
-        }
-        if ((this.state.opponentScore + value) > this.state.homeScore) {
-          this.setState({
-            opponentScoreColor: 'green',
-            homeScoreColor: 'red',
-            opponentScore: this.state.opponentScore + value
-          })
-        }
-        if ((this.state.opponentScore + value) === this.state.homeScore) {
-          this.setState({
-            opponentScoreColor: 'yellow',
-            homeScoreColor: 'yellow',
-            opponentScore: this.state.opponentScore + value
-          })
-        }
+        this.setState({
+          opponentScore: this.state.opponentScore + value
+        })
       }
     }
   }
@@ -219,17 +123,8 @@ export default class App extends Component {
                 <Image style={styles.teamImage} source={this.state.secondImage} />
               </TouchableOpacity>
             </View>
-            <Text style={{
-              fontSize: 25,
-              fontFamily: 'GROBOLD',
-              color: `${this.state.homeTotalScoreColor}`,
-            }}>{this.state.homeTotalScore}</Text>
-            <Text style={{
-              fontSize: 60,
-              fontFamily: 'GROBOLD',
-              color: `${this.state.homeScoreColor}`,
-              marginBottom: 30
-            }}>{this.state.homeScore}</Text>
+            <Text style={styles.teamTotalScore}>{this.state.homeTotalScore}</Text>
+            <Text style={styles.teamResult}>{this.state.homeScore}</Text>
             <TouchableOpacity onPress={() => { this.setHomeScore(1) }}>
               <Text style={styles.scores}>+1</Text>
             </TouchableOpacity>
@@ -261,17 +156,8 @@ export default class App extends Component {
                 <Image style={styles.teamImage} source={this.state.forthImage} />
               </TouchableOpacity>
             </View>
-            <Text style={{
-              fontSize: 25,
-              fontFamily: 'GROBOLD',
-              color: `${this.state.opponentTotalScoreColor}`,
-            }}>{this.state.opponentTotalScore}</Text>
-            <Text style={{
-              fontSize: 60,
-              fontFamily: 'GROBOLD',
-              color: `${this.state.opponentScoreColor}`,
-              marginBottom: 30
-            }}>{this.state.opponentScore}</Text>
+            <Text style={styles.teamTotalScore}>{this.state.opponentTotalScore}</Text>
+            <Text style={styles.teamResult}>{this.state.opponentScore}</Text>
             <TouchableOpacity onPress={() => { this.setOpponentScore(1) }}>
               <Text style={styles.scores}>+1</Text>
             </TouchableOpacity>
@@ -306,7 +192,7 @@ const styles = StyleSheet.create({
   externalContainer: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#000',
+    backgroundColor: '#8B4513',
     width: fullWidth,
     alignItems: 'center',
   },
@@ -314,7 +200,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: '#000',
+    backgroundColor: '#8B4513',
     width: fullWidth,
   },
   photoContainer: {
@@ -336,18 +222,27 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: 'GROBOLD',
     color: '#FFF',
+    textShadowColor:'#000',
+    textShadowOffset:{width: 2, height: 2},
+    textShadowRadius:10,
   },
   teamResult: {
     fontSize: 60,
     fontFamily: 'GROBOLD',
     color: '#FFF',
-    marginBottom: 30
+    marginBottom: 30,
+    textShadowColor:'#000',
+    textShadowOffset:{width: 2, height: 2},
+    textShadowRadius:10,
   },
   scores: {
     fontSize: 30,
     fontFamily: 'GROBOLD',
     color: '#FFF',
-    marginBottom: 15
+    marginBottom: 15,
+    textShadowColor:'#000',
+    textShadowOffset:{width: 2, height: 2},
+    textShadowRadius:10,
   },
   versus: {
     fontSize: 30,
